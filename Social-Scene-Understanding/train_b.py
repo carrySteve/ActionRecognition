@@ -73,14 +73,6 @@ __GACTIVITY_NUM = 8
 id2pact = {i: name for i, name in enumerate(PACTIONS)}
 id2gact = {i: name for i, name in enumerate(GACTIVITIES)}
 
-# def collate_fn(batch):
-#     group_info, actions, activities, features = zip(*batch)
-#     return torch.cat(
-#         features, dim=0), np.concatenate(
-#             actions, axis=0), np.concatenate(
-#                 activities, axis=0), torch.cat(
-#                     group_info, dim=0)
-
 
 def collate_fn(batch):
     group_info, actions, activities, features = zip(*batch)

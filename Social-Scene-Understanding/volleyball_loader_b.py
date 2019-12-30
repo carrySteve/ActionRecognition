@@ -42,31 +42,3 @@ class VolleyballDataset(Dataset):
 
     def __len__(self):
         return self.tsv.num_rows()
-
-
-# def collate_fn(batch):
-#     group_info, actions, activities, features = zip(*batch)
-#     return torch.cat(
-#         features, dim=0), torch.cat(
-#             actions, dim=0), np.concatenate(
-#                 activities, axis=0), torch.cat(
-#                     group_info, dim=0)
-
-
-# dataloaders_dict = {
-#     x: torch.utils.data.DataLoader(
-#         VolleyballDataset(x),
-#         batch_size=2,
-#         shuffle=False,
-#         num_workers=0,
-#         collate_fn=collate_fn)
-#     for x in ['trainval', 'test']
-# }
-
-# for features, actions, activities, group_info in dataloaders_dict['trainval']:
-#     print('group_info', group_info)
-#     print(features.shape)
-#     print(actions.shape, actions)
-#     # print(group_info)
-#     print(activities)
-#     sys.exit(0)

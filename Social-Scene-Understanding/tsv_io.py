@@ -41,7 +41,8 @@ class TSVFile(object):
             generate_lineidx(self.tsv_file, self.lineidx)
         if self._lineidx is None:
             with open(self.lineidx, 'r') as fp:
-                bar = FileProgressingbar(fp, "Loading lineidx {0}: ".format(self.lineidx))
+                bar = FileProgressingbar(
+                    fp, "Loading lineidx {0}: ".format(self.lineidx))
                 self._lineidx = []
                 for i in fp:
                     self._lineidx.append(int(i.strip()))

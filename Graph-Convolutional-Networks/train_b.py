@@ -189,8 +189,8 @@ def train_model(classifierB, dataloaders_dict, criterion_dict, optimizer):
                     actions_preds_target = torch.mean(actions_preds, dim=1)
                     # [B, N, 9]
                     # print(actions_preds_target.shape)
-                    _, actions_labels_target = torch.max(
-                        actions_preds_target, dim=2)
+                    _, actions_labels_target = torch.max(actions_preds_target,
+                                                         dim=2)
                     total_actions_target_accuracy += torch.sum(
                         actions_labels_target ==
                         actions[:, :__BBOX_NUM].data).item()
@@ -306,9 +306,8 @@ def train_model(classifierB, dataloaders_dict, criterion_dict, optimizer):
 
             if (epoch + 1) % __STORE_GAP == 0:
                 torch.save(
-                    classifierB.module.state_dict(),
-                    __CLASSIFIER_PATH + 'classifierB {} epoch-{}.pth'.format(
-                        __INFO, epoch + 1))
+                    classifierB.module.state_dict(), __CLASSIFIER_PATH +
+                    'classifierB {} epoch-{}.pth'.format(__INFO, epoch + 1))
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(
@@ -320,11 +319,10 @@ def train_model(classifierB, dataloaders_dict, criterion_dict, optimizer):
 
 def main():
     print('creating classifierB')
-    classifierB = ClassifierB(
-        feature_dim=__CLASSIFIER_INPUT,
-        embed_dim=__EMBED_DIM,
-        dropout_ratio=__DROPOUT_RATIO,
-        group_pool=__GROUP_POOL).to(device)
+    classifierB = ClassifierB(feature_dim=__CLASSIFIER_INPUT,
+                              embed_dim=__EMBED_DIM,
+                              dropout_ratio=__DROPOUT_RATIO,
+                              group_pool=__GROUP_POOL).to(device)
 
     # pretrained_dict = torch.load(__OLD_CLASSIFIERA_PATH)
     # classifierB_dict = classifierB.state_dict()
@@ -344,12 +342,11 @@ def main():
     classifierB = nn.DataParallel(classifierB, device_ids=device_ids)
 
     dataloaders_dict = {
-        x: DataLoader(
-            VolleyballDataset(x, __FRAME_MODE),
-            batch_size=__BATCH_SIZE,
-            shuffle=True,
-            num_workers=4,
-            collate_fn=collate_fn)
+        x: DataLoader(VolleyballDataset(x, __FRAME_MODE),
+                      batch_size=__BATCH_SIZE,
+                      shuffle=True,
+                      num_workers=4,
+                      collate_fn=collate_fn)
         for x in ['trainval', 'test']
         # for x in ['trainval']
     }
@@ -358,11 +355,10 @@ def main():
         'activity': nn.CrossEntropyLoss()
     }
 
-    optimizer = optim.SGD(
-        classifierB.parameters(),
-        lr=__LEARNING_RATE,
-        momentum=__MOMENTUM,
-        weight_decay=__WEIGHT_DECAY)
+    optimizer = optim.SGD(classifierB.parameters(),
+                          lr=__LEARNING_RATE,
+                          momentum=__MOMENTUM,
+                          weight_decay=__WEIGHT_DECAY)
 
     train_model(classifierB, dataloaders_dict, criterion_dict, optimizer)
 

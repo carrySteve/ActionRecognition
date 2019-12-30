@@ -55,13 +55,15 @@ class VolleyballDataset(Dataset):
         bboxes = np.array(json_dict['bboxes'])
         if person_num != num_boxes:
             bboxes = np.vstack([bboxes, bboxes[:num_boxes - len(bboxes[-1])]])
-            person_actions = np.hstack([person_actions, person_actions[:num_boxes - person_num]])
+            person_actions = np.hstack(
+                [person_actions, person_actions[:num_boxes - person_num]])
         img_np = np.array(json_dict['pixels'])
 
         image = Image.fromarray(img_np.astype('uint8'), 'RGB')
         img_tensor = test_transform(image)
 
-        return img_tensor, bboxes, person_actions, np.array(group_activities), group_info
+        return img_tensor, bboxes, person_actions, np.array(
+            group_activities), group_info
 
     def __len__(self):
         return self.tsv.num_rows()
@@ -74,35 +76,38 @@ def collate_fn(batch):
     return torch.stack(img_tensor), bboxes, np.hstack(actions), np.vstack(
         activities), np.hstack(group_info)
 
+
 dataloaders_dict = {
-    x: torch.utils.data.DataLoader(
-        VolleyballDataset(x),
-        batch_size=4,
-        shuffle=True,
-        num_workers=0,
-        collate_fn=collate_fn)
+    x: torch.utils.data.DataLoader(VolleyballDataset(x),
+                                   batch_size=4,
+                                   shuffle=True,
+                                   num_workers=0,
+                                   collate_fn=collate_fn)
     for x in ['trainval']
 }
+
 
 def memReport():
     for obj in gc.get_objects():
         if torch.is_tensor(obj):
             print(type(obj), obj.size())
-    
+
+
 def cpuStats():
-        print(sys.version)
-        print(psutil.cpu_percent())
-        print(psutil.virtual_memory())  # physical memory usage
-        pid = os.getpid()
-        py = psutil.Process(pid)
-        memoryUse = py.memory_info()[0] / 2. ** 30  # memory use in GB...I think
-        print('memory GB:', memoryUse)
+    print(sys.version)
+    print(psutil.cpu_percent())
+    print(psutil.virtual_memory())  # physical memory usage
+    pid = os.getpid()
+    py = psutil.Process(pid)
+    memoryUse = py.memory_info()[0] / 2.**30  # memory use in GB...I think
+    print('memory GB:', memoryUse)
 
 
-for img_tensor, bboxes, actions, activities, group_info in dataloaders_dict['trainval']:
-    
+for img_tensor, bboxes, actions, activities, group_info in dataloaders_dict[
+        'trainval']:
+
     cpuStats()
-    memReport() 
+    memReport()
     # print(sys.getsizeof(img_tensor))
     # print(bboxes.shape)
     # print(actions.shape)

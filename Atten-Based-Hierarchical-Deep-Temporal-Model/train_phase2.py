@@ -93,7 +93,11 @@ def train_model(model, dataloaders_dict, criterion, optimizer):
                 person_num = len(person_actions)
                 pidxes = range(person_num)
                 # pidx: frame hiddens
-                hidden_states = {fidx: {pidx for pidx in pidxes} for fidx in range(__FRAME_LEN)}
+                hidden_states = {
+                    fidx: {pidx
+                           for pidx in pidxes}
+                    for fidx in range(__FRAME_LEN)
+                }
                 person_features = {fidx: 0.0 for fidx in range(__FRAME_LEN)}
 
                 for fidx in range(__FRAME_LEN):
@@ -230,8 +234,9 @@ def train_model(model, dataloaders_dict, criterion, optimizer):
             with open(__LOG_PATH, 'a') as f:
                 f.write('{}|{}  {} {} Loss: {:.4f} Acc: {:.4f}\n'.format(
                     time.strftime('%m-%d %H:%M:%S', time.localtime(since)),
-                    time.strftime('%m-%d %H:%M:%S', time.localtime(
-                        time.time())), epoch, phase, epoch_loss, epoch_acc))
+                    time.strftime('%m-%d %H:%M:%S',
+                                  time.localtime(time.time())), epoch, phase,
+                    epoch_loss, epoch_acc))
 
             # deep copy the model
             if phase == 'val' and epoch_acc > best_acc:
@@ -254,6 +259,7 @@ def train_model(model, dataloaders_dict, criterion, optimizer):
     model.load_state_dict(best_model_wts)
     return model, val_acc_history
 
+
 print('creating model')
 model = ReactiveGRU(__INPUT_DIM, __PACTION_NUM, GACTIVITY_NUM, __HIDDEN_DIM,
                     __ATTN_DIM, __GRU_ACTIVE, __DROP_OUT).to(device)
@@ -262,12 +268,11 @@ model = ReactiveGRU(__INPUT_DIM, __PACTION_NUM, GACTIVITY_NUM, __HIDDEN_DIM,
 
 model = nn.DataParallel(model, device_ids=device_ids)
 dataloaders_dict = {
-    x: DataLoader(
-        FeatureDataset(x),
-        batch_size=__BATCH_SIZE,
-        shuffle=True,
-        num_workers=0,
-        collate_fn=collate_fn)
+    x: DataLoader(FeatureDataset(x),
+                  batch_size=__BATCH_SIZE,
+                  shuffle=True,
+                  num_workers=0,
+                  collate_fn=collate_fn)
     for x in ['train', 'val']
 }
 criterion = nn.CrossEntropyLoss()

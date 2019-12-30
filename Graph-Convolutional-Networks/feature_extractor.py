@@ -80,9 +80,8 @@ id2gact = {i: name for i, name in enumerate(GACTIVITIES)}
 
 def collate_fn(batch):
     img_tensor, bboxes, actions, activities, group_info = zip(*batch)
-    return torch.cat(
-        img_tensor, dim=0), np.stack(bboxes), np.vstack(actions), np.hstack(
-            activities), np.hstack(group_info)
+    return torch.cat(img_tensor, dim=0), np.stack(bboxes), np.vstack(
+        actions), np.hstack(activities), np.hstack(group_info)
 
 
 # def collate_fn(batch):
@@ -124,14 +123,14 @@ def train_model(backbone, dataloaders_dict, criterion_dict):
                 features_multiscale = []
                 features_multiscale.append(mixed_5d)
                 features_multiscale.append(
-                    F.interpolate(
-                        mixed_6e, (__OUTPUT_HEIGHT, __OUTPUT_WIDTH),
-                        mode='bilinear',
-                        align_corners=False))
-                features_multiscale = torch.cat(
-                    features_multiscale,
-                    dim=1).view(__BATCH_SIZE, __TIME_STEP, __CHANNEL,
-                                __OUTPUT_HEIGHT, __OUTPUT_WIDTH)
+                    F.interpolate(mixed_6e, (__OUTPUT_HEIGHT, __OUTPUT_WIDTH),
+                                  mode='bilinear',
+                                  align_corners=False))
+                features_multiscale = torch.cat(features_multiscale,
+                                                dim=1).view(
+                                                    __BATCH_SIZE, __TIME_STEP,
+                                                    __CHANNEL, __OUTPUT_HEIGHT,
+                                                    __OUTPUT_WIDTH)
                 # (B, T, 1056, 87, 157)
 
                 # TODO: construct index on-the-fly
@@ -209,12 +208,11 @@ def main():
     print('loading backbone from ' + __OLD_BACKBONE_PATH)
     backbone.load_state_dict(torch.load(__OLD_BACKBONE_PATH))
     dataloaders_dict = {
-        x: DataLoader(
-            VolleyballDataset(x),
-            batch_size=__BATCH_SIZE,
-            shuffle=False,
-            num_workers=2,
-            collate_fn=collate_fn)
+        x: DataLoader(VolleyballDataset(x),
+                      batch_size=__BATCH_SIZE,
+                      shuffle=False,
+                      num_workers=2,
+                      collate_fn=collate_fn)
         for x in ['trainval', 'test']
     }
     criterion_dict = {

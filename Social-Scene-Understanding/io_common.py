@@ -24,8 +24,8 @@ class FileProgressingbar:
             progressbar.Bar(), ' ',
             progressbar.ETA()
         ]
-        self.pbar = progressbar.ProgressBar(
-            widgets=widgets, maxval=flen).start()
+        self.pbar = progressbar.ProgressBar(widgets=widgets,
+                                            maxval=flen).start()
 
     def update(self):
         # self.fileobj.seek(0)

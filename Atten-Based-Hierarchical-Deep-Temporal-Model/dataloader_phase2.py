@@ -13,6 +13,7 @@ from tsv_io import TSVFile
 TRAIN_PATH = "../feature/train.tsv"
 VAL_PATH = "../feature/val.tsv"
 
+
 class FeatureDataset(Dataset):
     def __init__(self, phase):
         if phase == "train":

@@ -76,11 +76,9 @@ id2gact = {i: name for i, name in enumerate(GACTIVITIES)}
 
 def collate_fn(batch):
     group_info, actions, activities, features = zip(*batch)
-    return torch.cat(
-        features, dim=0), torch.cat(
-            actions, dim=0), np.concatenate(
-                activities, axis=0), torch.cat(
-                    group_info, dim=0)
+    return torch.cat(features, dim=0), torch.cat(
+        actions, dim=0), np.concatenate(activities,
+                                        axis=0), torch.cat(group_info, dim=0)
 
 
 def train_model(classifierB, dataloaders_dict, criterion_dict, optimizer):
@@ -212,10 +210,9 @@ def train_model(classifierB, dataloaders_dict, criterion_dict, optimizer):
 
 def main():
     print('creating classifierB')
-    classifierB = ClassifierB(
-        feature_dim=__CLASSIFIER_INPUT,
-        embed_dim=__EMBED_DIM,
-        dropout_ratio=__DROPOUT_RATIO).to(device)
+    classifierB = ClassifierB(feature_dim=__CLASSIFIER_INPUT,
+                              embed_dim=__EMBED_DIM,
+                              dropout_ratio=__DROPOUT_RATIO).to(device)
 
     # pretrained_dict = torch.load(__OLD_CLASSIFIERA_PATH)
     # classifierB_dict = classifierB.state_dict()
@@ -234,12 +231,11 @@ def main():
     classifierB = nn.DataParallel(classifierB, device_ids=device_ids)
 
     dataloaders_dict = {
-        x: DataLoader(
-            VolleyballDataset(x),
-            batch_size=__BATCH_SIZE,
-            shuffle=True,
-            num_workers=2,
-            collate_fn=collate_fn)
+        x: DataLoader(VolleyballDataset(x),
+                      batch_size=__BATCH_SIZE,
+                      shuffle=True,
+                      num_workers=2,
+                      collate_fn=collate_fn)
         for x in ['trainval', 'test']
         # for x in ['trainval']
     }
@@ -248,10 +244,9 @@ def main():
         'activity': nn.CrossEntropyLoss()
     }
 
-    optimizer = optim.Adam(
-        classifierB.parameters(),
-        lr=__LEARNING_RATE,
-        weight_decay=__WEIGHT_DECAY)
+    optimizer = optim.Adam(classifierB.parameters(),
+                           lr=__LEARNING_RATE,
+                           weight_decay=__WEIGHT_DECAY)
 
     train_model(classifierB, dataloaders_dict, criterion_dict, optimizer)
 

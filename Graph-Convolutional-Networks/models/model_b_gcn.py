@@ -11,10 +11,12 @@ class IndividualGraphModule(nn.Module):
     def __init__(self, in_channels, out_channels):
         super(IndividualGraphModule, self).__init__()
         print('using normal attention')
-        self.theta = nn.Conv2d(
-            in_channels=in_channels, out_channels=out_channels, kernel_size=1)
-        self.phi = nn.Conv2d(
-            in_channels=in_channels, out_channels=out_channels, kernel_size=1)
+        self.theta = nn.Conv2d(in_channels=in_channels,
+                               out_channels=out_channels,
+                               kernel_size=1)
+        self.phi = nn.Conv2d(in_channels=in_channels,
+                             out_channels=out_channels,
+                             kernel_size=1)
         self.init_weights()
 
     def forward(self, x):
@@ -51,10 +53,12 @@ class IndividualGraphModule(nn.Module):
 class IndividualGraphModuleGeneral(nn.Module):
     def __init__(self, in_channels, out_channels):
         super(IndividualGraphModuleGeneral, self).__init__()
-        self.theta = nn.Conv2d(
-            in_channels=in_channels, out_channels=out_channels, kernel_size=1)
-        self.phi = nn.Conv2d(
-            in_channels=in_channels, out_channels=out_channels, kernel_size=1)
+        self.theta = nn.Conv2d(in_channels=in_channels,
+                               out_channels=out_channels,
+                               kernel_size=1)
+        self.phi = nn.Conv2d(in_channels=in_channels,
+                             out_channels=out_channels,
+                             kernel_size=1)
         self.general_weights = nn.Parameter(
             torch.zeros(out_channels, out_channels))
         print('using general attention')
@@ -91,10 +95,12 @@ class IndividualGraphModuleConcat(nn.Module):
     def __init__(self, in_channels, out_channels):
         super(IndividualGraphModuleConcat, self).__init__()
         print('using concat attention')
-        self.theta = nn.Conv2d(
-            in_channels=in_channels, out_channels=out_channels, kernel_size=1)
-        self.phi = nn.Conv2d(
-            in_channels=in_channels, out_channels=out_channels, kernel_size=1)
+        self.theta = nn.Conv2d(in_channels=in_channels,
+                               out_channels=out_channels,
+                               kernel_size=1)
+        self.phi = nn.Conv2d(in_channels=in_channels,
+                             out_channels=out_channels,
+                             kernel_size=1)
         self.W_a = nn.Parameter(torch.zeros(out_channels, out_channels * 2))
         self.tanh = nn.Tanh()
         self.v_a = nn.Parameter(torch.zeros(1, out_channels))
@@ -167,20 +173,18 @@ class SpatialTemporalGCN(nn.Module):
             print('wrong atten method')
             sys.exit(0)
 
-        self.spatial_gcn_conv = nn.Conv2d(
-            in_channels=in_channels,
-            out_channels=out_channels,
-            kernel_size=kernel_size[1])
+        self.spatial_gcn_conv = nn.Conv2d(in_channels=in_channels,
+                                          out_channels=out_channels,
+                                          kernel_size=kernel_size[1])
 
         self.temporal_gcn_conv = nn.Sequential(
             nn.BatchNorm2d(out_channels), nn.Tanh(),
             nn.Dropout(p=dropout, inplace=True),
-            nn.Conv2d(
-                in_channels=out_channels,
-                out_channels=out_channels,
-                kernel_size=(kernel_size[0], 1),
-                stride=(stride, 1),
-                padding=temporal_gcn_conv_padding),
+            nn.Conv2d(in_channels=out_channels,
+                      out_channels=out_channels,
+                      kernel_size=(kernel_size[0], 1),
+                      stride=(stride, 1),
+                      padding=temporal_gcn_conv_padding),
             nn.BatchNorm2d(out_channels), nn.Tanh())
 
         if not residual:
@@ -189,11 +193,10 @@ class SpatialTemporalGCN(nn.Module):
             self.residual = lambda x: x
         else:
             self.residual = nn.Sequential(
-                nn.Conv2d(
-                    in_channels=in_channels,
-                    out_channels=out_channels,
-                    kernel_size=1,
-                    stride=(stride, 1)), nn.BatchNorm2d(out_channels),
+                nn.Conv2d(in_channels=in_channels,
+                          out_channels=out_channels,
+                          kernel_size=1,
+                          stride=(stride, 1)), nn.BatchNorm2d(out_channels),
                 nn.Tanh())
 
         self.init_weights()

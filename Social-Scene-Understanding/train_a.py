@@ -49,7 +49,7 @@ note = "implement social scene  \n\
         weight_decay: {}    \n\
         crop_size: {}   \n\
         embed_dim: {}   \n\
-        dropout_ratio:{} \n"                                                                                                                                                                        .format(
+        dropout_ratio:{} \n".format(
     time.strftime('%m-%d %H:%M:%S', time.localtime(time.time())),
     __LEARNING_RATE, __WEIGHT_DECAY, __CROP_SIZE, __EMBED_DIM, __DROPOUT_RATIO)
 
@@ -137,10 +137,10 @@ def train_model(backbone, classifier, dataloaders_dict, criterion_dict,
                     features_multiscale.append(mixed_5d)
                     # print(mixed_5d.permute(0, 2, 3, 1))
                     features_multiscale.append(
-                        F.interpolate(
-                            mixed_6e, (__OUTPUT_HEIGHT, __OUTPUT_WIDTH),
-                            mode='bilinear',
-                            align_corners=False))
+                        F.interpolate(mixed_6e,
+                                      (__OUTPUT_HEIGHT, __OUTPUT_WIDTH),
+                                      mode='bilinear',
+                                      align_corners=False))
                     features_multiscale = torch.cat(features_multiscale, dim=1)
                     # (1, 1056, 87, 157)
 
@@ -165,8 +165,8 @@ def train_model(backbone, classifier, dataloaders_dict, criterion_dict,
                         for pidx in range(__BBOX_NUM):
                             y0, x0, y1, x1 = map(int,
                                                  batch_bboxes[pidx].tolist())
-                            crop_feature = feature[:, :, y0:(y1 + 1), x0:(
-                                x1 + 1)]
+                            crop_feature = feature[:, :, y0:(y1 + 1), x0:(x1 +
+                                                                          1)]
                             crop_resize_feature = F.interpolate(
                                 crop_feature, (__CROP_SIZE, __CROP_SIZE),
                                 mode='bilinear',
@@ -271,10 +271,9 @@ def main():
     backbone = inception_v3().to(device)
 
     print('creating classifier')
-    classifier = ClassifierA(
-        feature_dim=__CLASSIFIER_INPUT,
-        embed_dim=__EMBED_DIM,
-        dropout_ratio=__DROPOUT_RATIO).to(device)
+    classifier = ClassifierA(feature_dim=__CLASSIFIER_INPUT,
+                             embed_dim=__EMBED_DIM,
+                             dropout_ratio=__DROPOUT_RATIO).to(device)
 
     # Initialize the models for this run
     backbone_dict = backbone.state_dict()
@@ -297,12 +296,11 @@ def main():
     classifier = nn.DataParallel(classifier, device_ids=device_ids)
 
     dataloaders_dict = {
-        x: DataLoader(
-            VolleyballDataset(x),
-            batch_size=__BATCH_SIZE,
-            shuffle=True,
-            num_workers=2,
-            collate_fn=collate_fn)
+        x: DataLoader(VolleyballDataset(x),
+                      batch_size=__BATCH_SIZE,
+                      shuffle=True,
+                      num_workers=2,
+                      collate_fn=collate_fn)
         for x in ['trainval', 'test']
     }
     criterion_dict = {
@@ -311,8 +309,9 @@ def main():
     }
 
     params = list(backbone.parameters()) + list(classifier.parameters())
-    optimizer = optim.Adam(
-        params, lr=__LEARNING_RATE, weight_decay=__WEIGHT_DECAY)
+    optimizer = optim.Adam(params,
+                           lr=__LEARNING_RATE,
+                           weight_decay=__WEIGHT_DECAY)
 
     train_model(backbone, classifier, dataloaders_dict, criterion_dict,
                 optimizer)

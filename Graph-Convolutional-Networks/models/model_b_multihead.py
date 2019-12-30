@@ -10,10 +10,12 @@ from torch.nn import functional as F
 class IndividualGraphModule(nn.Module):
     def __init__(self, in_channels, out_channels):
         super(IndividualGraphModule, self).__init__()
-        self.theta = nn.Conv2d(
-            in_channels=in_channels, out_channels=out_channels, kernel_size=1)
-        self.phi = nn.Conv2d(
-            in_channels=in_channels, out_channels=out_channels, kernel_size=1)
+        self.theta = nn.Conv2d(in_channels=in_channels,
+                               out_channels=out_channels,
+                               kernel_size=1)
+        self.phi = nn.Conv2d(in_channels=in_channels,
+                             out_channels=out_channels,
+                             kernel_size=1)
         self.init_weights()
 
     def forward(self, x):
@@ -64,20 +66,18 @@ class SpatialTemporalGCN(nn.Module):
         self.individual_graph_module = IndividualGraphModule(
             in_channels, kernel_size[1])
 
-        self.spatial_gcn_conv = nn.Conv2d(
-            in_channels=in_channels,
-            out_channels=out_channels,
-            kernel_size=kernel_size[1])
+        self.spatial_gcn_conv = nn.Conv2d(in_channels=in_channels,
+                                          out_channels=out_channels,
+                                          kernel_size=kernel_size[1])
 
         self.temporal_gcn_conv = nn.Sequential(
             nn.BatchNorm2d(out_channels), nn.ReLU(inplace=True),
             nn.Dropout(p=dropout),
-            nn.Conv2d(
-                in_channels=out_channels,
-                out_channels=out_channels,
-                kernel_size=(kernel_size[0], 1),
-                stride=(stride, 1),
-                padding=temporal_gcn_conv_padding),
+            nn.Conv2d(in_channels=out_channels,
+                      out_channels=out_channels,
+                      kernel_size=(kernel_size[0], 1),
+                      stride=(stride, 1),
+                      padding=temporal_gcn_conv_padding),
             nn.BatchNorm2d(out_channels), nn.ReLU(inplace=True))
 
         if not residual:
@@ -86,11 +86,10 @@ class SpatialTemporalGCN(nn.Module):
             self.residual = lambda x: x
         else:
             self.residual = nn.Sequential(
-                nn.Conv2d(
-                    in_channels=in_channels,
-                    out_channels=out_channels,
-                    kernel_size=1,
-                    stride=(stride, 1)), nn.BatchNorm2d(out_channels),
+                nn.Conv2d(in_channels=in_channels,
+                          out_channels=out_channels,
+                          kernel_size=1,
+                          stride=(stride, 1)), nn.BatchNorm2d(out_channels),
                 nn.ReLU(inplace=True))
 
         self.init_weights()
@@ -149,9 +148,9 @@ class ClassifierB(nn.Module):
         self.data_bn = nn.BatchNorm2d(embed_dim)
 
         kernel_size = (temporal_kernel_size, spatial_kernel_size)
-        self.st_gcn_networks = nn.ModuleList((
-            SpatialTemporalGCN(embed_dim, embed_dim, kernel_size, 1),
-            SpatialTemporalGCN(embed_dim, embed_dim, kernel_size, 1)))
+        self.st_gcn_networks = nn.ModuleList(
+            (SpatialTemporalGCN(embed_dim, embed_dim, kernel_size, 1),
+             SpatialTemporalGCN(embed_dim, embed_dim, kernel_size, 1)))
 
         self.predict_action = nn.Linear(embed_dim, action_dim, bias=True)
         if group_pool == 'max':

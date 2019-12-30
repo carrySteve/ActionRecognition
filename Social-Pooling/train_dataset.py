@@ -4,14 +4,16 @@ import pickle
 import sys
 import os
 
-class TrainDataset(Dataset) :
+
+class TrainDataset(Dataset):
     def __init__(self):
         self.NUM_SCENES = 5
         self.TRAIN_SCENE = 4
         for s in range(self.NUM_SCENES):
             #load annotations
 
-            dataset = open('annotations/deathCircle/video' + str(s) + '/annotations.txt')
+            dataset = open('annotations/deathCircle/video' + str(s) +
+                           '/annotations.txt')
             #dictionary to hold parsed details
             scene = {}
 
@@ -33,13 +35,13 @@ class TrainDataset(Dataset) :
                 if label == "Car":
                     label = "Cart"
                 member_id = int(row[0])
-                
+
                 position = (x, y)
                 position = torch.Tensor(position)
-                
+
                 if torch.cuda.is_available():
                     position = position.cuda()
-                                
+
                 info = [member_id, position, label]
                 if frame in scene:
                     scene[frame].append(info)
@@ -65,12 +67,17 @@ class TrainDataset(Dataset) :
                     if obj[0] not in path_dict[prev_frame]:
                         path_dict[frame][obj[0]] = [obj[1]]
                     else:
-                        path_dict[frame][obj[0]] = path_dict[prev_frame][obj[0]] + [obj[1]]
+                        path_dict[frame][
+                            obj[0]] = path_dict[prev_frame][obj[0]] + [obj[1]]
 
-            if os.path.exists('train_data/pooling/scene' + str(s) + '/scene.pickle'):
+            if os.path.exists('train_data/pooling/scene' + str(s) +
+                              '/scene.pickle'):
                 pass
             else:
-                pickle.dump([outlay_dict, class_dict, path_dict], open('train_data/pooling/scene' + str(s) + '/scene.pickle', 'wb'))
+                pickle.dump(
+                    [outlay_dict, class_dict, path_dict],
+                    open('train_data/pooling/scene' + str(s) + '/scene.pickle',
+                         'wb'))
 
     def __getitem__(self, index):
         y = 'train_data/pooling/scene' + str(index) + '/scene.pickle'

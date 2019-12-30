@@ -2,10 +2,10 @@ import math
 import torch
 from dataloader_phase1 import VolleyballDataset
 
-
 IMG_SIZE = 224
 BATCH_SIZE = 1
 NUM_FRAMES = 10
+
 
 def collate_fn(batch):
     person_pixels, person_actions, group_info = zip(*batch)
@@ -14,15 +14,13 @@ def collate_fn(batch):
 
 
 if __name__ == "__main__":
-    
 
     dataloaders_dict = {
-        x: torch.utils.data.DataLoader(
-            VolleyballDataset(x),
-            batch_size=BATCH_SIZE,
-            shuffle=False,
-            num_workers=0,
-            collate_fn=collate_fn)
+        x: torch.utils.data.DataLoader(VolleyballDataset(x),
+                                       batch_size=BATCH_SIZE,
+                                       shuffle=False,
+                                       num_workers=0,
+                                       collate_fn=collate_fn)
         for x in ['train', 'val']
     }
 
@@ -78,10 +76,11 @@ if __name__ == "__main__":
     std /= nb_samples
     raw_std = (rstd, gstd, bstd)
     new_std = (math.sqrt(rstd / total_pixel), math.sqrt(gstd / total_pixel),
-            math.sqrt(bstd / total_pixel))
+               math.sqrt(bstd / total_pixel))
 
     print(mean, std, nb_samples, raw_std, new_std)
 
     with open('mean.txt', 'w+') as f:
-        f.write('mean:{}\nstd:{}\nnb_samples:{}\nraw_std:{}\nnew_std:{}\n'.format(
-            mean, std, nb_samples, raw_std, new_std))
+        f.write(
+            'mean:{}\nstd:{}\nnb_samples:{}\nraw_std:{}\nnew_std:{}\n'.format(
+                mean, std, nb_samples, raw_std, new_std))

@@ -377,7 +377,6 @@ def train_model(model, vgg, extractor, dataloaders_dict, criterion, optimizer):
                             length_lstm += person_num
                             # print(running_corrects, length)
 
-
             epoch_loss_vgg = running_loss_vgg / length_vgg
             epoch_acc_vgg = running_corrects_vgg.double() / length_vgg
             epoch_loss_lstm = running_loss_lstm / length_lstm

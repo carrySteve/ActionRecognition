@@ -11,10 +11,12 @@ class IndividualGraphModuleGeneral(nn.Module):
     def __init__(self, in_channels, out_channels):
         super(IndividualGraphModuleGeneral, self).__init__()
         print('using general attention')
-        self.theta = nn.Conv2d(
-            in_channels=in_channels, out_channels=out_channels, kernel_size=1)
-        self.phi = nn.Conv2d(
-            in_channels=in_channels, out_channels=out_channels, kernel_size=1)
+        self.theta = nn.Conv2d(in_channels=in_channels,
+                               out_channels=out_channels,
+                               kernel_size=1)
+        self.phi = nn.Conv2d(in_channels=in_channels,
+                             out_channels=out_channels,
+                             kernel_size=1)
         self.general_weights = nn.Parameter(
             torch.zeros(out_channels, out_channels))
         self.init_weights()
@@ -69,20 +71,18 @@ class SpatialTemporalGCN(nn.Module):
         self.gcn_bn = nn.BatchNorm2d(out_channels)
         self.res_bn = nn.BatchNorm2d(out_channels)
 
-        self.spatial_gcn_conv = nn.Conv2d(
-            in_channels=in_channels,
-            out_channels=out_channels,
-            kernel_size=kernel_size[1])
+        self.spatial_gcn_conv = nn.Conv2d(in_channels=in_channels,
+                                          out_channels=out_channels,
+                                          kernel_size=kernel_size[1])
 
         self.temporal_gcn_conv = nn.Sequential(
             nn.BatchNorm2d(out_channels), nn.Tanh(),
             nn.Dropout(p=dropout, inplace=True),
-            nn.Conv2d(
-                in_channels=out_channels,
-                out_channels=out_channels,
-                kernel_size=(kernel_size[0], 1),
-                stride=(stride, 1),
-                padding=temporal_gcn_conv_padding),
+            nn.Conv2d(in_channels=out_channels,
+                      out_channels=out_channels,
+                      kernel_size=(kernel_size[0], 1),
+                      stride=(stride, 1),
+                      padding=temporal_gcn_conv_padding),
             nn.BatchNorm2d(out_channels), nn.Tanh())
 
         if not residual:
@@ -91,11 +91,10 @@ class SpatialTemporalGCN(nn.Module):
             self.residual = lambda x: x
         else:
             self.residual = nn.Sequential(
-                nn.Conv2d(
-                    in_channels=in_channels,
-                    out_channels=out_channels,
-                    kernel_size=1,
-                    stride=(stride, 1)), nn.BatchNorm2d(out_channels),
+                nn.Conv2d(in_channels=in_channels,
+                          out_channels=out_channels,
+                          kernel_size=1,
+                          stride=(stride, 1)), nn.BatchNorm2d(out_channels),
                 nn.Tanh())
 
         self.init_weights()

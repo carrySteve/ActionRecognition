@@ -18,9 +18,7 @@ class ClassifierA(nn.Module):
         self.activity_dim = activity_dim
         self.embed_layer = nn.Sequential(
             nn.Linear(feature_dim, embed_dim, bias=True),
-            nn.ReLU(inplace=True),
-            nn.Dropout(p=dropout_ratio)
-        )
+            nn.ReLU(inplace=True), nn.Dropout(p=dropout_ratio))
         self.predict_action = nn.Linear(embed_dim, action_dim, bias=True)
 
         self.predict_activity = nn.Sequential(
@@ -63,15 +61,14 @@ class ClassifierB(nn.Module):
                  activity_dim=8,
                  dropout_ratio=0.8):
         super(ClassifierB, self).__init__()
-        self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+        self.device = torch.device(
+            'cuda:0' if torch.cuda.is_available() else 'cpu')
         self.feature_dim = feature_dim
         self.hidden_dim = hidden_dim
         self.action_dim = action_dim
         self.activity_dim = activity_dim
         self.embed_layer = nn.Sequential(
-            nn.Linear(embed_dim, hidden_dim, bias=True),
-            nn.Tanh()
-        )
+            nn.Linear(embed_dim, hidden_dim, bias=True), nn.Tanh())
 
         self.gru = nn.GRUCell(hidden_dim, hidden_dim)
 
@@ -96,7 +93,8 @@ class ClassifierB(nn.Module):
         total_action_logits = []
         for batch_idx in range(batch_size):
             batch_hiddens = []
-            prev_hidden = torch.zeros(person_num, self.hidden_dim).to(self.device)
+            prev_hidden = torch.zeros(person_num,
+                                      self.hidden_dim).to(self.device)
             for fidx in range(time_step):
                 feature_batch_frame = feature_embed[batch_idx][fidx]
                 # [12, 1024]
@@ -118,7 +116,8 @@ class ClassifierB(nn.Module):
         # [BTN, 9]
         total_hiddens = torch.stack(total_hiddens)
         # [B, T, N, 1024]
-        activity_logits = self.predict_activity(total_hiddens).view(-1, self.activity_dim)
+        activity_logits = self.predict_activity(total_hiddens).view(
+            -1, self.activity_dim)
         # [B, T, N, 1024] -> [B, T, 1, 1024] -> [B, T, 1, 8] -> [BT, 8]
 
         return total_action_logits, activity_logits
@@ -126,7 +125,7 @@ class ClassifierB(nn.Module):
     def init_weights(self):
         nn.init.xavier_uniform_(self.embed_layer[0].weight)
         self.embed_layer[0].bias.data.zero_()
-        
+
         nn.init.xavier_uniform_(self.gru.weight_ih)
         nn.init.xavier_uniform_(self.gru.weight_hh)
         self.gru.bias_ih.data.zero_()

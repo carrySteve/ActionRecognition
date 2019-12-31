@@ -93,13 +93,15 @@ def volley_read_annotations(img_dir, track_path, sid, phase):
 
                     action = act_to_id[action_name]
                     actions.append(action)
-                    for fidx, bbox in enumerate(ind_values[TARGET_FRAME - (
-                            FRAME_NUM / 2):TARGET_FRAME + (FRAME_NUM / 2)]):
+                    for fidx, bbox in enumerate(
+                            ind_values[TARGET_FRAME -
+                                       (FRAME_NUM / 2):TARGET_FRAME +
+                                       (FRAME_NUM / 2)]):
                         # print(fidx, bbox)
                         x, y, w, h = map(float, bbox.split(' '))
                         # bboxes[fidx].append((x, y, w, h))
-                        bboxes[fidx].append((y / H, x / W, (y + h) / H,
-                                             (x + w) / W))
+                        bboxes[fidx].append(
+                            (y / H, x / W, (y + h) / H, (x + w) / W))
 
             bboxes_frame = []
             for fidx in bboxes:

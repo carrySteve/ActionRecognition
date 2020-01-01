@@ -18,7 +18,8 @@ The project is a joint research project between Tianjin University and SUNY, Alb
 
 I implemented multiple baselines, and five of them are released in this repo. As we are still working on the newest version, its code is not available now.
 
-The task of **Baseline 1 & 2 (Social-Pooling)** was to predict trajectories of objects in Stanford dataset. The goal of the two baselines was to explore whether attention mechanism can work.
+The task of **Baseline 1 & 2 (Social-Pooling)** 
+[Baseline 1 & 2 (Social-Pooling)](Social-Pooling "Social-Pooling") was to predict trajectories of objects in Stanford dataset. The goal of the two baselines was to explore whether attention mechanism can work.
 
 Then we moved on to the [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset") and utilized **Baseline 3 (Atten-Based-Hierarchical-Deep-Temporal-Model)** to get players' RGB features and added attention mechanism.
 
@@ -31,7 +32,7 @@ Also, we added graph convolutional networks on **Baseline 4**, i.e. **Baseline 5
 I firstly implemented *Alahi et al., Social LSTM: Human Trajectory Prediction in Crowded Spaces, CVPR 2016* on [Stanford Drone Dataset](http://cvgl.stanford.edu/projects/uav_data/ "Stanford Drone Dataset")
 using PyTorch. The baseline aims to predict pedestrian's track with the help of Social Pooling Algorithm and LSTM (we replaced it with GRU)
 
-A brief description of [Stanford Drone Dataset](http://cvgl.stanford.edu/projects/uav_data/ "Stanford Drone Dataset") can be found in the last section.
+A brief description of [Stanford Drone Dataset](http://cvgl.stanford.edu/projects/uav_data/ "Stanford Drone Dataset") can be found in the [last section](#drone).
 
 For further explanation, please visit this [readme file](Social-Pooling/README.md "Social LSTM").
 
@@ -45,7 +46,7 @@ For further explanation, please visit this [readme file](Social-Pooling/README.m
 
 Next, we moved on to the [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset") and utilized *Ibrahim et al., A Hierarchical Deep Temporal Model for Group Activity Recognition, CVPR 2016* as a backbone architecture. As the source code is in CAFFE, I implemented the work in PyTorch so that we could try our own ideas on it.
 
-A brief description of [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset") can be found in the last section.
+A brief description of [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset") can be found in the [last section](#volley).
 
 For further explanation, please visit this [readme file](Atten-Based-Hierarchical-Deep-Temporal-Model/README.md "Atten HDT").
 
@@ -65,14 +66,14 @@ For further explanation, please visit this [readme file](Graph-Convolutional-Net
 
 The project used the following two datasets up to now. The first is [Stanford Drone Dataset](http://cvgl.stanford.edu/projects/uav_data/ "Stanford Drone Dataset") and the second is [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset"). Baseline 1 & 2 used the first and the following work utilized the second.
 
-### [Stanford Drone Dataset](http://cvgl.stanford.edu/projects/uav_data/ "Stanford Drone Dataset")
+### [Stanford Drone Dataset](http://cvgl.stanford.edu/projects/uav_data/ "Stanford Drone Dataset")<span id="drone"></span>
 
 The [Stanford Drone Dataset](http://cvgl.stanford.edu/projects/uav_data/ "Stanford Drone Dataset") includes four types of objects, and all of the objects shown in picture were annotated with their bounding boxes.
 
 In the following picture, pedestrians are labeled in pink, bicyclists in red, skateboarders in orange, and cars in green.
 ![Stanford-Drone-Dataset](imgs/drone.jpg)
 
-### [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset")
+### [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset")<span id="volley"></span>
 
 The dataset is proposed by *Ibrahim et al., A Hierarchical Deep Temporal Model for Group Activity Recognition, CVPR 2016*.
 

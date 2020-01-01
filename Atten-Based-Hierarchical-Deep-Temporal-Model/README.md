@@ -9,7 +9,7 @@ Here I also provide a baseline with the attention mechanism mentioned in **Basel
 ## Files Illustration
 
 - [backbone.py](backbone.py "backbone.py") provides the VGG model. The code is from TorchVision.
-- [compute_mean.py](compute_mean.py "compute_mean.py") is used to compute the means and standard deviations of $R, G, B$ channels seperately so that we can perform normalization on the input pixels globally.
+- [compute_mean.py](compute_mean.py "compute_mean.py") is used to compute the means and standard deviations of $R, G, B$ channels separately so that we can perform normalization on the input pixels globally.
 - [models.py](models.py "models.py") provides the network architecture besides CNN backbone.
 - [train_phase1.py](train_phase1.py "train_phase1.py") is used to train the person LSTM and CNN in the first phase. As the number of athletes in each frame varies, the batch size is fixed to $1$.
 - [train_phase1_batch.py](train_phase1_batch.py "train_phase1_batch.py") is used to train the person LSTM and CNN in the first phase. The file pads the number of athletes to $12$ by repeating the last $N$ player pixels so that a larger batch size can be utilized.
@@ -27,7 +27,7 @@ The hidden states of the players are then aggregated if these players are in a t
 
 ![HDT1](../imgs/hdt1.png)
 
-As the GPU memory is limited, Dr. Ibrahim used  training phases as followed.
+As the GPU memory is limited, Dr. Ibrahim used training phases as followed.
 
 1. train AlexNet & person LSTM
 2. generate group LSTM input

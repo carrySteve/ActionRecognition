@@ -51,11 +51,13 @@ Next, we moved on to the [Volleyball Dataset](https://github.com/mostafa-saad/de
 
 A brief description of [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset") can be found in the last section.
 
-For further explanation, please visit this [readme file](Atten-Based-Hierarchical-Deep-Temporal-Model "Atten HDT").
+For further explanation, please visit this [readme file](Atten-Based-Hierarchical-Deep-Temporal-Model/README.md "Atten HDT").
 
 ## Baseline 4 - Social Scene Understanding (SSU)
 
 Unluckily, the overfitting cannot be handled easily. Hence, we turned to another backbone architecture described in *Bagautdinov et al, Social Scene Understanding: End-to-End Multi-Person Action Localization and Collective Activity Recognition, CVPR 2017*. As the source code is in TensorFlow, I implemented the work in PyTorch so that we could try our own ideas on it.
+
+For further explanation, please visit this [readme file](Social-Scene-Understanding/README.md "Atten HDT").
 
 ## Baseline 5 - Spatial-Temporal Graph Convolutional Networks Based on SSU
 

@@ -2,8 +2,6 @@
 
 ## Table of Contents
 
-- [Action-Recognition](#action-recognition)
-  - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Baseline 1 - Social LSTM](#baseline-1---social-lstm)
   - [Baseline 2 - Social Attention](#baseline-2---social-attention)
@@ -20,11 +18,11 @@ The project aims to utilize deep neural networks to recognize individual actions
 
 The project is a joint research project between Tianjin University and SUNY, Albany.
 
-I implemented multiple baselines, and four of them are released in this repo. And as we are still working on the newest version, the code of it is not available now.
+I implemented multiple baselines, and five of them are released in this repo. As we are still working on the newest version, its code is not available now.
 
 The task of **Baseline 1 & 2 (Social-Pooling)** was to predict trajectories of objects in Stanford dataset. The goal of the two baselines was to explore whether attention mechanism can work.
 
-Then we moved on to the volleyball dataset and utilized **Baseline 3 (Atten-Based-Hierarchical-Deep-Temporal-Model)** to get players' RGB features and added attention mechanism.
+Then we moved on to the [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset") and utilized **Baseline 3 (Atten-Based-Hierarchical-Deep-Temporal-Model)** to get players' RGB features and added attention mechanism.
 
 However, **Baseline 3** led to serious overfitting. After trying multiple techniques, the problem still remained. Hence, we utilized the backbone architecture of **Baseline 4 (Social-Scene-Understanding)**.
 
@@ -32,22 +30,24 @@ Also, we added graph convolutional networks on **Baseline 4**, i.e. **Baseline 5
 
 ## Baseline 1 - Social LSTM
 
-I firstly implemented *Alahi et al., Social LSTM: Human Trajectory Prediction in Crowded Spaces, CVPR 2016* on Stanford Drone Dataset
+I firstly implemented *Alahi et al., Social LSTM: Human Trajectory Prediction in Crowded Spaces, CVPR 2016* on [Stanford Drone Dataset](http://cvgl.stanford.edu/projects/uav_data/ "Stanford Drone Dataset")
 using PyTorch. The baseline aims to predict pedestrian's track with the help of Social Pooling Algorithm and LSTM (we replaced it with GRU)
 
-The description of Stanford Drone Dataset can be found in the last section.
+A brief description of [Stanford Drone Dataset](http://cvgl.stanford.edu/projects/uav_data/ "Stanford Drone Dataset") can be found in the last section.
 
-<!-- For further explanation, please visit this [readme file](Social-Pooling/README.md "Social LSTM"). -->
+For further explanation, please visit this [readme file](Social-Pooling/README.md "Social LSTM").
 
 ## Baseline 2 - Social Attention
 
 Then I added the attention mechanism described by *Vemula et al., Social Attention: Modeling Attention in Human Crowds, ICRA 2018* to help the model focus on all other objects in the frame when predicting the current object’s track.
 
-<!-- For further explanation, please visit this [readme file](Social-Pooling/README.md "Social LSTM"). -->
+For further explanation, please visit this [readme file](Social-Pooling/README.md "Social LSTM").
 
 ## Baseline 3 - Social Attention Based on Hierarchical Deep Temporal Models
 
-Next, we moved on to the volleyball dataset and utilized *Ibrahim et al., A Hierarchical Deep Temporal Model for Group Activity Recognition, CVPR 2016* as a backbone architecture. As the source code is in CAFFE, I implemented the work in PyTorch so that we could try our own ideas on it.
+Next, we moved on to the [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset") and utilized *Ibrahim et al., A Hierarchical Deep Temporal Model for Group Activity Recognition, CVPR 2016* as a backbone architecture. As the source code is in CAFFE, I implemented the work in PyTorch so that we could try our own ideas on it.
+
+A brief description of [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset") can be found in the last section.
 
 Here I provide a baseline with the previous attention mechanism to improve accuracy. However, this version led to serious overfitting.
 
@@ -63,14 +63,14 @@ After implementing the above baselines and adding attention mechanism, the test 
 
 The project used the following two datasets up to now. The first is [Stanford Drone Dataset](http://cvgl.stanford.edu/projects/uav_data/ "Stanford Drone Dataset") and the second is [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset"). Baseline 1 & 2 used the first and the following work utilized the second.
 
-### Stanford Drone Dataset
+### [Stanford Drone Dataset](http://cvgl.stanford.edu/projects/uav_data/ "Stanford Drone Dataset")
 
-The Stanford Drone Dataset includes four types of objects, and all of the objects shown in picture were annotated with their bounding boxes.
+The [Stanford Drone Dataset](http://cvgl.stanford.edu/projects/uav_data/ "Stanford Drone Dataset") includes four types of objects, and all of the objects shown in picture were annotated with their bounding boxes.
 
 In the following picture, pedestrians are labeled in pink, bicyclists in red, skateboarders in orange, and cars in green.
 ![Stanford-Drone-Dataset](imgs/drone.jpg)
 
-### Volleyball Dataset
+### [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset")
 
 The dataset is proposed by *Ibrahim et al., A Hierarchical Deep Temporal Model for Group Activity Recognition, CVPR 2016*.
 
@@ -79,7 +79,9 @@ They annotated 4830 frames that were handpicked from 55 YouTube videos with 9 pl
 Examples of the dataset are shown above. For more information, please visit [this repo](https://github.com/mostafa-saad/deep-activity-rec "Deep-Activity-Rec").
 
 ![dataset-1](imgs/dataset1.jpg)
+
 A frame labeled as Left Spike and bounding boxes around each team players is annotated in the dataset.
 
 ![dataset-2](imgs/dataset2.jpg)
+
 For each visible player, an action label is annotated.

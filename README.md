@@ -18,14 +18,13 @@ The project is a joint research project between Tianjin University and SUNY, Alb
 
 I implemented multiple baselines, and five of them are released in this repo. As we are still working on the newest version, its code is not available now.
 
-The task of **Baseline 1 & 2 (Social-Pooling)** 
-[Baseline 1 & 2 (Social-Pooling)](Social-Pooling "Social-Pooling") was to predict trajectories of objects in Stanford dataset. The goal of the two baselines was to explore whether attention mechanism can work.
+The task of [Baseline 1 & 2 (Social-Pooling)](Social-Pooling "Social-Pooling") was to predict trajectories of objects in Stanford dataset. The goal of the two baselines was to explore whether attention mechanism can work.
 
-Then we moved on to the [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset") and utilized **Baseline 3 (Atten-Based-Hierarchical-Deep-Temporal-Model)** to get players' RGB features and added attention mechanism.
+Then we moved on to the [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset") and utilized [Baseline 3 (Atten-Based-Hierarchical-Deep-Temporal-Model)](Atten-Based-Hierarchical-Deep-Temporal-Model "Atten-Based-Hierarchical-Deep-Temporal-Model") to get players' RGB features and added attention mechanism.
 
-However, **Baseline 3** led to serious overfitting. After trying multiple techniques, the problem still remained. Hence, we utilized the backbone architecture of **Baseline 4 (Social-Scene-Understanding)**.
+However, [Baseline 3 ](Atten-Based-Hierarchical-Deep-Temporal-Model "Atten-Based-Hierarchical-Deep-Temporal-Model") led to serious overfitting. After trying multiple techniques, the problem still remained. Hence, we utilized the backbone architecture of [Baseline 4 (Social-Scene-Understanding)](Social-Scene-Understanding "Social-Scene-Understanding").
 
-Also, we added graph convolutional networks on **Baseline 4**, i.e. **Baseline 5 (Graph-Convolutional-Networks)** and achieved the best result at that time.
+Also, we added graph convolutional networks on [Baseline 4](Social-Scene-Understanding "Social-Scene-Understanding"), i.e., [Baseline 5 (Graph-Convolutional-Networks)](Graph-Convolutional-Networks "Graph-Convolutional-Networks") and achieved the best result at that time.
 
 ## Baseline 1 - Social LSTM
 

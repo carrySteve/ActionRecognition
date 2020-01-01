@@ -1,9 +1,5 @@
 # Action-Recognition
 
-## Table of Contents
-
-- [Action-Recognition](#action-recognition)
-  - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Baseline 1 - Social LSTM](#baseline-1---social-lstm)
   - [Baseline 2 - Social Attention](#baseline-2---social-attention)

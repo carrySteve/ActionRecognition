@@ -27,6 +27,6 @@ The network architecture is shown as below.
 The result statics is shown as below:
 
 || Bagautdinov et al.(2017) | PyTorch implementation |
-| ------ | ------ | ------ | ------ |
+| :------: | :------: | :------: | :------: |
 | Person Action Rec. Acc.| 82.4% | 89.9% |
 | Group Activity Rec. Acc.| 81.15% | 90.43% |

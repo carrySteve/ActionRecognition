@@ -57,11 +57,13 @@ For further explanation, please visit this [readme file](Atten-Based-Hierarchica
 
 Unluckily, the overfitting cannot be handled easily. Hence, we turned to another backbone architecture described in *Bagautdinov et al, Social Scene Understanding: End-to-End Multi-Person Action Localization and Collective Activity Recognition, CVPR 2017*. As the source code is in TensorFlow, I implemented the work in PyTorch so that we could try our own ideas on it.
 
-For further explanation, please visit this [readme file](Social-Scene-Understanding/README.md "Atten HDT").
+For further explanation, please visit this [readme file](Social-Scene-Understanding/README.md "Social-Scene-Understanding").
 
 ## Baseline 5 - Spatial-Temporal Graph Convolutional Networks Based on SSU
 
 After implementing the above baselines and adding attention mechanism, the test accuracy remained to be below the state of the art. Hence, we replaced the attention mechanism with *Yan et al., Spatial-Temporal Graph Convolutional Network, AAAI 2019* and got the best result at that time.
+
+For further explanation, please visit this [readme file](Graph-Convolutional-Networks/README.md "Graph-Convolutional-Networks").
 
 ## Datasets
 

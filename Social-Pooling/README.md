@@ -1,5 +1,6 @@
 # Baseline 1 & 2
 
+  - [Files Illustration](#files-illustration)
   - [Baseline 1 - Social LSTM](#baseline-1---social-lstm)
     - [Methods](#methods)
     - [Results](#results)
@@ -13,13 +14,14 @@
 
 This page provides the source code for the first two baselines. To be more specific, [train.py](train.py "train.py") is the main function for the first baseline and [train_atten.py](train_atten.py "train_atten.py") is for the other.
 
-[models.py](models.py "models.py") provides the basic model and attention model for the two baselines.
-
-[train_dataset.py](train_dataset.py "train_dataset.py") is used to read data from files.
-
-[visual.py](visual.py "visual.py") provides the visualization tool for the two baselines using Matplotlib.
-
 The baselines were developed using `python 2.7` and `PyTorch 0.4.0`.
+
+## Files Illustration
+
+- [models.py](models.py "models.py") provides the basic model and attention model for the two baselines.
+- [train_dataset.py](train_dataset.py "train_dataset.py") is used to read data from files.
+- [visual.py](visual.py "visual.py") provides the visualization tool for the two baselines using Matplotlib.
+
 
 ## Baseline 1 - Social LSTM
 
@@ -66,7 +68,7 @@ So I added the attention mechanism described by *Vemula et al., Social Attention
 
 ![social-attention1](../imgs/sa1.png)
 
-In the above graph, $h_v^t$ is the hidden states of the current object at current frame while $h_v.^t$ is the hidden states aggregation of the nearby objects at current frame. And $m$ denotes the number of nearby objects, $d_e$ is the embedding dimension after the fully connected layer.
+In the above graph, $h_v^t$ is the hidden states of the current object at current frame while $h_v.^t$ is the hidden states aggregation of the nearby objects at current frame. And $m$ denotes the number of nearby objects, $d_e$ is the embedding dimension after the fully connected layer. $\frac{m}{\sqrt{d_e}}$ acts as a normalization term.
 
 After the attention mechanism, we concatenated the result with the embedded $X_v^t$ (i.e., the $x, y$ coordinates of the object) feature, and then fed them to RNN.
 

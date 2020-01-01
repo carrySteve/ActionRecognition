@@ -2,6 +2,8 @@
 
 ## Table of Contents
 
+- [Action-Recognition](#action-recognition)
+  - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Baseline 1 - Social LSTM](#baseline-1---social-lstm)
   - [Baseline 2 - Social Attention](#baseline-2---social-attention)
@@ -49,7 +51,7 @@ Next, we moved on to the [Volleyball Dataset](https://github.com/mostafa-saad/de
 
 A brief description of [Volleyball Dataset](https://github.com/mostafa-saad/deep-activity-rec "Volleyball Dataset") can be found in the last section.
 
-Here I provide a baseline with the previous attention mechanism to improve accuracy. However, this version led to serious overfitting.
+For further explanation, please visit this [readme file](Atten-Based-Hierarchical-Deep-Temporal-Model "Atten HDT").
 
 ## Baseline 4 - Social Scene Understanding (SSU)
 

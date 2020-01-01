@@ -13,7 +13,7 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 
 from dataloader_phase2 import FeatureDataset
-from dataloader_phase2 import ReactiveGRU
+from models import ReactiveGRU
 
 # hyperparameters
 __BATCH_SIZE = 1
